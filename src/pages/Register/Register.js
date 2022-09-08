@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { register } from '../../store/actions/authActions';
 
@@ -14,8 +14,8 @@ const Register = (props) => {
     });
 
     //connect redux help of react-redux
-    const auth = useSelector(state=>state.user);
-    const dispatch= useDispatch();
+    const auth = useSelector(state=>state);
+    console.log(auth)
     const handleChange=e=>{
         setUser({
             ...user,
@@ -42,7 +42,7 @@ const Register = (props) => {
                             type="text" 
                             placeholder='Enter Your Name'
                             onChange={handleChange}
-                            className='form-control'
+                            className={user.error.name? 'form-control invalid-feedback':'form-control'}
                             name='name'
                             id='name'
                             value={user.name||''}
@@ -54,7 +54,7 @@ const Register = (props) => {
                             type="email" 
                             placeholder='Enter Your Email'
                             onChange={handleChange}
-                            className='form-control'
+                            className={user.error.email? 'form-control invalid-feedback':'form-control'}
                             name='email'
                             id='email'
                             value={user.email||''}
@@ -66,7 +66,7 @@ const Register = (props) => {
                             type="password" 
                             placeholder='Enter Your Password'
                             onChange={handleChange}
-                            className='form-control'
+                            className={user.error.password? 'form-control invalid-feedback':'form-control'}
                             name='password'
                             id='password'
                             value={user.password||''}
@@ -78,7 +78,7 @@ const Register = (props) => {
                             type="password" 
                             placeholder='Enter Your Password Again'
                             onChange={handleChange}
-                            className='form-control'
+                            className={user.error.confirmPassword? 'form-control invalid-feedback':'form-control'}
                             name='confirmPassword'
                             id='confirmPassword'
                             value={user.confirmPassword||''}
