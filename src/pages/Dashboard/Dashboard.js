@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
+import CreateTransaction from '../../components/transaction/CreateTransaction';
 import { loadTrunsactions } from '../../store/actions/transactionActions';
 
 const Dashboard = (props) => {
     const {auth, transactions} = useSelector(state=>state);
-    console.log(transactions)
+    const [createModalOpen, setIsOpen] = useState(false);
     useEffect(()=>{
         props.loadTrunsactions()
     },[props])
@@ -13,6 +14,8 @@ const Dashboard = (props) => {
             <div className="col-md-8 offset-md-2">
                 <h1>Welcome {auth?.user.name} </h1>
                 <p>Your Email is: {auth?.user.email}</p>
+                <button className='btn btn-primary' onClick={()=>setIsOpen(true)}>Create New Transaction</button>
+                <CreateTransaction isOpen={createModalOpen} closeModal={setIsOpen}/>
                 <br />
                 <h1>Transactions:</h1>
                 <ul className="list-group">
