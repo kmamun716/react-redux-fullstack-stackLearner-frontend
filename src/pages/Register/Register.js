@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { register } from '../../store/actions/authActions';
 
 
@@ -12,19 +12,18 @@ const Register = (props) => {
         confirmPassword: '',
         error: {}
     });
+    const navigate = useNavigate();
 
     //connect redux help of react-redux
-    const auth = useSelector(state=>state);
+    const auth = useSelector(state=>state.auth);
     useEffect(()=>{
-        console.log(auth, user)
-        if(auth.auth.error?.name || auth.auth.error?.email || auth.auth.error?.password || auth.auth.error?.confirmPassword){
-            console.log('error',auth.auth.error)
+        if(auth.error?.name || auth.error?.email || auth.error?.password || auth.error?.confirmPassword){
             setUser({
                 ...user,
-                error:auth.auth.error
+                error:auth.error
             })
         }
-    },[auth])
+    },[auth.error])
     const handleChange=e=>{
         setUser({
             ...user,
@@ -38,7 +37,7 @@ const Register = (props) => {
             email: user.email,
             password: user.password,
             confirmPassword: user.confirmPassword
-        })
+        }, navigate)
     }
     return (
         <div className='row'>
