@@ -38,7 +38,7 @@ export const login = (user, navigate) => dispatch =>{
                     user: decoded
                 }
             })
-            navigate('/')
+            navigate('/dashboard')
         })
         .catch(err=>{
             dispatch({
