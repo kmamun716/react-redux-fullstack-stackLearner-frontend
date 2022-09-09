@@ -1,12 +1,29 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { connect, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { login } from '../../store/actions/authActions';
 
-const Login = () => {
+const Login = (props) => {
     const [user, setUser] = useState({
         email: '',
         password: '',
         error: {}
     });
+    const navigate = useNavigate();
+    const auth = useSelector(state=>state.auth);
+    useEffect(()=>{
+        if(auth.error?.email || auth.error?.password){
+            setUser({
+                ...user,
+                error:auth.error
+            })
+        }else{
+            setUser({
+                ...user,
+                error:{}
+            })
+        }
+    },[auth.error])
     const handleChange=e=>{
         setUser({
             ...user,
@@ -15,7 +32,10 @@ const Login = () => {
     };
     const handleSubmit=e=>{
         e.preventDefault();
-        console.log(user)
+        props.login({
+            email: user.email,
+            password: user.password
+        }, navigate)
     }
     return (
         <div className='row'>
@@ -28,12 +48,12 @@ const Login = () => {
                             type="email" 
                             placeholder='Enter Your Email'
                             onChange={handleChange}
-                            className='form-control'
+                            className={user.error.email? 'form-control is-invalid':'form-control'}
                             name='email'
                             id='email'
                             value={user.email||''}
-                            required
                         />
+                        <p className='invalid-feedback'>{user.error.email}</p>
                     </div>
                     <div className="form-group">
                         <label htmlFor='password'>Password:</label>
@@ -41,12 +61,12 @@ const Login = () => {
                             type="password" 
                             placeholder='Enter Your Password'
                             onChange={handleChange}
-                            className='form-control'
+                            className={user.error.password? 'form-control is-invalid':'form-control'}
                             name='password'
                             id='password'
                             value={user.password||''}
-                            required
                         />
+                        <p className='invalid-feedback'>{user.error.password}</p>
                     </div>
                     <input type="submit" className="btn btn-primary my-2" value='Login' />
                 </form>
@@ -56,4 +76,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default connect(null, {login})(Login);
