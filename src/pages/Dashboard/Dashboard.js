@@ -23,6 +23,7 @@ const Dashboard = (props) => {
                         transactions.map(trns=><li key={trns._id} className='list-group-item'>
                             <p>Type: {trns.type}</p>
                             <p>Amount: {trns.amount}</p>
+                            <p>Note: {trns.note}</p>
                         </li>)
                     }
                 </ul>
