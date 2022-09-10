@@ -11,6 +11,10 @@ const transactionReducer=(state=[], action)=>{
             transactions.unshift(action.payload.transaction);
             return transactions;
         }
+        case Types.REMOVE_TRANSACTION: {
+            let transactions = [...state];
+            return transactions.filter(trans=>trans._id !== action.payload.id)
+        }
         default: return state
     }
 };

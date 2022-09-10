@@ -29,4 +29,18 @@ export const createTrunsaction=trans=>dispatch=>{
             })
         })
         .catch(err=>console.log(err))
+};
+
+
+export const removeTransaction=transId=>dispatch=>{
+    axios.delete(`http://localhost:4000/api/transaction/${transId}`)
+        .then(res=>{
+            dispatch({
+                type: Types.REMOVE_TRANSACTION,
+                payload:{
+                    id: res.data._id
+                }
+            })
+        })
+        .catch(err=>console.log(err))
 }

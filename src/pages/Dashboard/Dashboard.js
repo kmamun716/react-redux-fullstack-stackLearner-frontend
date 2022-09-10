@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { connect, useSelector } from 'react-redux';
 import CreateTransaction from '../../components/transaction/CreateTransaction';
-import { loadTrunsactions } from '../../store/actions/transactionActions';
+import { loadTrunsactions, removeTransaction } from '../../store/actions/transactionActions';
 
 const Dashboard = (props) => {
     const {auth, transactions} = useSelector(state=>state);
@@ -24,6 +24,7 @@ const Dashboard = (props) => {
                             <p>Type: {trns.type}</p>
                             <p>Amount: {trns.amount}</p>
                             <p>Note: {trns.note}</p>
+                            <button className='btn btn-danger' onClick={()=>props.removeTransaction(trns._id)}>Delete</button>
                         </li>)
                     }
                 </ul>
@@ -32,4 +33,4 @@ const Dashboard = (props) => {
     );
 };
 
-export default connect(null, {loadTrunsactions})(Dashboard);
+export default connect(null, {loadTrunsactions, removeTransaction})(Dashboard);
