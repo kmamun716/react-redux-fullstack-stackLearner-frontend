@@ -43,4 +43,17 @@ export const removeTransaction=transId=>dispatch=>{
             })
         })
         .catch(err=>console.log(err))
+};
+
+export const updateTransaction=(transId, trans)=>dispatch=>{
+    axios.put(`http://localhost:4000/api/transaction/${transId}`, trans)
+        .then(res=>{
+            dispatch({
+                type: Types.UPDATE_TRANSACTION,
+                payload:{
+                    transaction: res.data.transaction
+                }
+            })
+        })
+        .catch(err=>console.log(err))
 }
