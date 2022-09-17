@@ -36,6 +36,7 @@ const CreateTransaction = (props) => {
       type: "",
       note: "",
     });
+    props.closeModal(false)
   };
   return (
     <Modal

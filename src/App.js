@@ -1,4 +1,5 @@
 import { Route, Routes } from 'react-router-dom';
+import Navigation from './components/Navigation/Navigation';
 import Dashboard from './pages/Dashboard/Dashboard';
 import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
@@ -8,6 +9,7 @@ import Register from './pages/Register/Register';
 function App() {
   return (
     <div className='container'>
+      <Navigation/>
       <Routes>
         <Route path='/' element={<Home/>} />
         <Route path='/register' element={<Register/>} />
