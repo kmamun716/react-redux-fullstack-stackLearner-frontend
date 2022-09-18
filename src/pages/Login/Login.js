@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { login } from '../../store/actions/authActions';
 
@@ -9,6 +9,7 @@ const Login = (props) => {
         password: '',
         error: {}
     });
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const auth = useSelector(state=>state.auth);
     useEffect(()=>{
@@ -32,10 +33,10 @@ const Login = (props) => {
     };
     const handleSubmit=e=>{
         e.preventDefault();
-        props.login({
+        dispatch(login({
             email: user.email,
             password: user.password
-        }, navigate)
+        }, navigate))
     }
     return (
         <div className='row'>
@@ -76,4 +77,4 @@ const Login = (props) => {
     );
 };
 
-export default connect(null, {login})(Login);
+export default Login;

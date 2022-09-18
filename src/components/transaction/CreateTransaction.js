@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { createTrunsaction } from "../../store/actions/transactionActions";
 
 const customStyles = {
@@ -22,6 +22,7 @@ const CreateTransaction = (props) => {
     type: "",
     note: "",
   });
+  const dispatch = useDispatch();
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -30,7 +31,7 @@ const CreateTransaction = (props) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.createTrunsaction(formData);
+    dispatch(createTrunsaction(formData));
     setFormData({
       amount: 0,
       type: "",
@@ -89,4 +90,4 @@ const CreateTransaction = (props) => {
   );
 };
 
-export default connect(null, { createTrunsaction })(CreateTransaction);
+export default CreateTransaction;

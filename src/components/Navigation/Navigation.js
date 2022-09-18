@@ -1,14 +1,14 @@
 import React from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
-import { connect, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { LinkContainer } from "react-router-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../store/actions/authActions";
 
-const Navigation = (props) => {
+const Navigation = () => {
   const auth = useSelector((state) => state.auth);
   const navigate = useNavigate();
-  // console.log(auth)
+  const dispatch = useDispatch();
   return (
     <Navbar bg="dark" variant="dark">
       <Container>
@@ -21,7 +21,7 @@ const Navigation = (props) => {
               <LinkContainer to="/dashboard">
                 <Nav.Link>Dashboard</Nav.Link>
               </LinkContainer>
-              <Nav.Link onClick={() => props.logout(navigate)}>Logout</Nav.Link>
+              <Nav.Link onClick={() => dispatch(logout(navigate))}>Logout</Nav.Link>
             </>
           ) : (
             <LinkContainer to="/login">
@@ -34,4 +34,4 @@ const Navigation = (props) => {
   );
 };
 
-export default connect(null, { logout })(Navigation);
+export default Navigation;

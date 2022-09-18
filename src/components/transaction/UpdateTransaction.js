@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Modal from "react-modal";
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateTransaction } from "../../store/actions/transactionActions";
 
 const customStyles = {
@@ -16,11 +16,14 @@ const customStyles = {
 
 Modal.setAppElement(document.getElementById("root"));
 
+
 const UpdateTransaction = (props) => {
   const [formData, setFormData] = useState({
     amount: 0,
     note: "",
   });
+
+  const dispatch= useDispatch();
 
   useEffect(()=>{
     setFormData({
@@ -36,7 +39,7 @@ const UpdateTransaction = (props) => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    props.updateTransaction(props.transaction._id, formData)
+    dispatch(updateTransaction(props.transaction._id, formData))
     props.closeModal(false)
   };
   return (
@@ -78,4 +81,4 @@ const UpdateTransaction = (props) => {
   );
 };
 
-export default connect(null, { updateTransaction })(UpdateTransaction);
+export default UpdateTransaction;

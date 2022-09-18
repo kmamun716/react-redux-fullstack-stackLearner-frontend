@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CreateTransaction from '../../components/transaction/CreateTransaction';
 import UpdateTransaction from '../../components/transaction/UpdateTransaction';
 import { loadTrunsactions, removeTransaction } from '../../store/actions/transactionActions';
 
-const Dashboard = (props) => {
+const Dashboard = () => {
     const {auth, transactions} = useSelector(state=>state);
     const [createModalOpen, setIsOpen] = useState(false);
     const [updateModalOpen, setUpdateOpen] = useState(false);
-    const [editData, setEditData]= useState({})
+    const [editData, setEditData]= useState({});
+    const dispatch = useDispatch();
     useEffect(()=>{
-        props.loadTrunsactions()
-    },[props])
+        dispatch(loadTrunsactions())
+    },[dispatch])
     const handleUpdate=(isOpen, data)=>{
         setUpdateOpen(isOpen)
         setEditData(data)
@@ -33,7 +34,7 @@ const Dashboard = (props) => {
                             <p>Amount: {trns.amount}</p>
                             <p>Note: {trns.note}</p>
                             <button className='btn btn-info' onClick={()=>handleUpdate(true, trns)}>Edit</button>
-                            <button className='btn btn-danger' onClick={()=>props.removeTransaction(trns._id)}>Delete</button>
+                            <button className='btn btn-danger' onClick={()=>dispatch(removeTransaction(trns._id))}>Delete</button>
                         </li>)
                     }
                 </ul>
@@ -42,4 +43,4 @@ const Dashboard = (props) => {
     );
 };
 
-export default connect(null, {loadTrunsactions, removeTransaction})(Dashboard);
+export default Dashboard;
